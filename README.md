@@ -1,2 +1,2 @@
 # Android_inertial_navigation
-use LINEAR_ACCELERATION to creat inertial navigation
+使用线性加速度传感器做到惯性导航
