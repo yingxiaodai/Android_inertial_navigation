@@ -1,0 +1,125 @@
+package com.example.sensortest;
+
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Bundle;
+import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity implements SensorEventListener {
+    SensorManager sensorManager;
+    int startFlag = 0;
+    int flag=0;
+    double j_x[]=new double[5];
+    long t0 = 0;
+    double a_x = 0,a_y = 0,a_z = 0;
+    double v0_x = 0, v0_y = 0, v0_z = 0;
+    double s0_x = 0, s0_y = 0, s0_z = 0;
+    double Sx = 0, Sy = 0, Sz = 0;
+    TextView tvMagx;
+    TextView tvMagy;
+    TextView tvMagz;
+    TextView tvLAx;
+    TextView tvLAy;
+    TextView tvLAz;
+    TextView tvVx;
+    TextView tvVy;
+    TextView tvVz;
+    TextView tvSx;
+    TextView tvSy;
+    TextView tvSz;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_ORIENTATION ), SensorManager.SENSOR_DELAY_UI);
+        sensorManager.registerListener(this, sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION), SensorManager.SENSOR_DELAY_GAME);
+        tvMagx = findViewById(R.id.tvMag1);
+        tvMagy = findViewById(R.id.tvMag2);
+        tvMagz = findViewById(R.id.tvMag3);
+        tvLAx = findViewById(R.id.tvLA1);
+        tvLAy = findViewById(R.id.tvLA2);
+        tvLAz = findViewById(R.id.tvLA3);
+        tvVx = findViewById(R.id.tvV1);
+        tvVy = findViewById(R.id.tvV2);
+        tvVz = findViewById(R.id.tvV3);
+        tvSx = findViewById(R.id.tvS1);
+        tvSy = findViewById(R.id.tvS2);
+        tvSz = findViewById(R.id.tvS3);
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        if (event.sensor.getType() == Sensor.TYPE_ORIENTATION ) {
+            double X_lateral = event.values[0];
+            double Y_longitudinal = event.values[1];
+            double Z_vertical = event.values[2];
+            tvMagx.setText("x轴：\n" + X_lateral);
+            tvMagy.setText("y轴：\n" + Y_longitudinal);
+            tvMagz.setText("z轴：\n" + Z_vertical);
+        }
+        else if (event.sensor.getType() == Sensor.TYPE_LINEAR_ACCELERATION) {
+//            double a_x = event.values[0];
+
+            j_x[flag++]=event.values[0];
+            if(flag==5){
+                double sum=0;
+                for(int i=0;i<5;i++){
+                    sum+=j_x[i];
+                }
+                a_x = sum/5;
+                flag=0;
+            }
+            a_y = event.values[1];
+            a_z = event.values[2];
+            tvLAx.setText("x轴加速度：\n" + a_x);
+            tvLAy.setText("y轴加速度：\n" + a_y);
+            tvLAz.setText("z轴加速度：\n" + a_z);
+            long currentTime = System.currentTimeMillis();
+            if(startFlag == 0) {
+                t0 = currentTime;
+                startFlag = 1;
+//                return;
+            }
+            long deltaT = currentTime - t0;
+            v0_x += calacV(a_x, deltaT);
+            v0_y += calacV(a_y, deltaT);
+            v0_z += calacV(a_z, deltaT);
+            s0_x += calacS(a_x, deltaT, v0_x);;
+            s0_y += calacS(a_y, deltaT, v0_y);
+            s0_z += calacS(a_x, deltaT, v0_x);
+            t0 = currentTime;
+            tvVx.setText("x轴速度：\n" + v0_x);
+            tvVy.setText("y轴速度：\n" + v0_y);
+            tvVz.setText("z轴速度：\n" + v0_z);
+            tvSx.setText("x轴位移：\n" + s0_x);
+            tvSy.setText("y轴位移：\n" + s0_y);
+            tvSz.setText("z轴位移：\n" + s0_z);
+        }
+    }
+    public double calacS(double acca, long deltaT, double v0) {
+        double tmp = (double)deltaT / 1000.0;
+        return  v0 * tmp + acca * tmp * tmp * 0.5;
+    }
+    public double calacV(double acca, long deltaT) {
+        double tmp = (double)deltaT / 1000.0;
+        return  acca * tmp;
+    }
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
+    }
+
+
+    @Override
+    public void onPause() {
+        sensorManager.unregisterListener(this);
+        super.onPause();
+    }
+}
