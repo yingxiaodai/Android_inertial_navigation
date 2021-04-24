@@ -12,4 +12,4 @@ Bluetooth
     setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
     boolean enable)：注册蓝牙服务通道
     BluetoothGattCallback回调的方法
-    详见：https://blog.csdn.net/wdmxzf
+    详见：https://blog.csdn.net/wdmxzf————Android开发——Bluetooth（二到五）
