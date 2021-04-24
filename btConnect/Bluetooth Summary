@@ -1,0 +1,15 @@
+Bluetooth
+    关于蓝牙的操作，不得不说两个类BluetoothGatt和BluetoothGattCallback；
+    这两个类包含了对蓝牙的操作（写入命令）和读取蓝牙返回的值。
+    BluetoothGatt 里有几个重要的方法：
+    connect()：链接
+    disconnect()：断开链接
+    discoverServices()：搜索蓝牙服务
+    getServices()：获取蓝牙服务（多个）
+    getService(UUID uuid)：根据蓝牙服务UUID，获取对应的蓝牙服务（一个）
+    readCharacteristic(BluetoothGattCharacteristic characteristic)：读取特征值
+    writeCharacteristic(BluetoothGattCharacteristic characteristic)：写入特征值（向蓝牙写入命令）等。
+    setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
+    boolean enable)：注册蓝牙服务通道
+    BluetoothGattCallback回调的方法
+    详见：https://blog.csdn.net/wdmxzf
