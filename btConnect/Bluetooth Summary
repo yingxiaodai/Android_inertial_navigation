@@ -1,15 +1,36 @@
 Bluetooth
-    关于蓝牙的操作，不得不说两个类BluetoothGatt和BluetoothGattCallback；
-    这两个类包含了对蓝牙的操作（写入命令）和读取蓝牙返回的值。
-    BluetoothGatt 里有几个重要的方法：
-    connect()：链接
-    disconnect()：断开链接
-    discoverServices()：搜索蓝牙服务
-    getServices()：获取蓝牙服务（多个）
-    getService(UUID uuid)：根据蓝牙服务UUID，获取对应的蓝牙服务（一个）
-    readCharacteristic(BluetoothGattCharacteristic characteristic)：读取特征值
-    writeCharacteristic(BluetoothGattCharacteristic characteristic)：写入特征值（向蓝牙写入命令）等。
-    setCharacteristicNotification(BluetoothGattCharacteristic characteristic,
-    boolean enable)：注册蓝牙服务通道
-    BluetoothGattCallback回调的方法
-    详见：https://blog.csdn.net/wdmxzf————Android开发——Bluetooth（二到五）
+    蓝牙编程步骤如下:
+
+    (1).获得本机蓝牙设备：BluetoothAdapter mBTAdp = BluetoothAdapter.getDefaultAdapter();;
+
+    (2)注册一个发现设备的回调函数
+
+    getActivity().registerReceiver(mBroadcastReceiver,intentFilter);
+    (3)开始搜索设备：mBTAdp.startDiscovery();在Listview中显示结果，点击具体条目时，返回蓝牙地址：mAddr
+
+    (4)通过mAddr获得远程设备：BluetoothDevice mBTRemoteDev  = mBTAdp.getRemoteDevice(mAddr); //其中mAddr
+
+    (5)通过远程设备的对象，获得Socket：mBTSocket = mBTDevInThread.createRfcommSocketToServiceRecord(uuid);
+
+BluetoothAdapter常用方法如下：
+
+方法	                                        说明
+getDefaultAdapter	                            默认本地适配器，如果此硬件平台不支持蓝牙，则为空。
+isEnabled	                                    如果蓝牙当前已启用并准备好使用，则返回true。
+getState	                                    获取本地蓝牙适配器的当前状态。STATE_OFF（关闭）、STATE_TURNING_ON（正在打开）、STATE_ON（开启）、STATE_TURNING_OFF（正在关闭）
+enable	                                        强制开启蓝牙
+disable	                                        强制关闭蓝牙
+disable(boolean persist)	                    强制关闭蓝牙，是否保留设置。
+getAddress	                                    获取蓝牙地址
+getName	                                        获取蓝牙名字
+factoryReset	                                出厂重置蓝牙
+setName(String name)	                        设置蓝牙名字
+getScanMode	                                    获取蓝牙的扫描模式，扫描模式确定是否可以连接或被发现。SCAN_MODE_NONE（蓝牙未开启）、
+                                                SCAN_MODE_CONNECTABLE（不可见）、SCAN_MODE_CONNECTABLE_DISCOVERABLE（可见）
+setScanMode(@ScanMode int mode, int duration)	（需要使用反射）设置蓝牙的扫描模式，单独的setScanMode(int mode)改变状态设置默认蓝牙可见时间
+getDiscoverableTimeout、setDiscoverableTimeout(int timeout)	    （需要使用反射）获取和设置默认蓝牙可见时间
+startDiscovery	                                开始扫描其他蓝牙
+cancelDiscovery	                                取消扫描
+isDiscovering	                                是否在扫描中
+getBondedDevices	                            获取已绑定蓝牙
+getConnectionState	                            获取蓝牙连接状态。STATE_CONNECTED（已连接）、STATE_DISCONNECTED（未连接）、STATE_CONNECTING（连接中）
