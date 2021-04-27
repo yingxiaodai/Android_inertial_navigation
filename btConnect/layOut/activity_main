@@ -62,7 +62,7 @@
             android:layout_weight="1"
             android:onClick="onClickSTOP"
             android:text="STOP" />
-
+ 
         <Button
             android:id="@+id/c"
             android:layout_width="wrap_content"
