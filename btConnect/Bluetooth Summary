@@ -14,7 +14,7 @@ Bluetooth
 
 BluetoothAdapter常用方法如下：
 
-方法	                                        说明
+方法	                                          说明
 getDefaultAdapter	                            默认本地适配器，如果此硬件平台不支持蓝牙，则为空。
 isEnabled	                                    如果蓝牙当前已启用并准备好使用，则返回true。
 getState	                                    获取本地蓝牙适配器的当前状态。STATE_OFF（关闭）、STATE_TURNING_ON（正在打开）、STATE_ON（开启）、STATE_TURNING_OFF（正在关闭）
