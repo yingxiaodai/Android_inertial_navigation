@@ -1,0 +1,57 @@
+2021-4-28
+kotlin学习
+1.1 变量
+  kotlin只有两种定义变量的方式——val（vlaue）和val（variable），对应可变的和不可变的变量，这源于kotlin出色的类型推导机制
+  但是如果对变量延迟赋值的话就要显示声明变量，如 val a ： Int = 10；kotlin全部数据类型都是大写开头，对应对象数据类型
+  且kotlin每一行代码结尾是不带分号的
+1.2 函数
+  格式fun 函数名(变量): 返回值类型  {   }
+  例：fun getValue(v: Int): Int {
+        return v
+      }
+  若没有返回值则返回值类型可为空
+  if条件语句：https://blog.csdn.net/qq_35178391/article/details/106734637
+  when条件语句：https://blog.csdn.net/weixin_34186128/article/details/87999240?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161962438916780262591322%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=161962438916780262591322&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-87999240.first_rank_v2_pc_rank_v29&utm_term=kotlinwhen&spm=1018.2226.3001.4187
+  循环语句：
+    while循环和Java中一样
+    for循环：
+    //顺序 遍历0-100 包括0和100
+        for (index in 0..100) {
+            Log.d(TAG, "- $index")
+        }
+
+        //倒序 遍历0-100 包括0和100
+        for (index in 100 downTo 0) {
+            Log.d(TAG, "$index")
+        }
+
+        //顺序 遍历0-99 注意：不包括100(until 排除结束元素)
+        for (index in 0 until 100) {
+            Log.d(TAG, "$index")
+        }
+
+        //遍历0-100 步长为5 输出0 5 10 15 20..
+        for (index in 0..100 step 5) {
+            Log.d(TAG, "$index")
+        }
+
+        val list_test = listOf(User("张三", 25), User("李四", 26), User("王五", 27))
+
+        //取出集合中的每个元素  输出：User(name=张三, age=25) User(name=李四, age=26) User(name=王五, age=27)
+        for (user in list_test) {
+            Log.d(TAG, "$user")
+        }
+
+        //取出下标 输出 0 1 2
+        for (index in list_test.indices) {
+            Log.d(TAG, "$index")
+        }
+
+        /**
+         *   取出下标和值  输出： IndexedValue(index=0, value=User(name=张三, age=25)) IndexedValue(index=1, value=User(name=李四, age=26))...
+         *   使用"index.index"取出下标
+         *   使用"index.value"取出User
+         */
+        for (index in list_test.withIndex()) {
+            Log.d(TAG, "${index.value}")
+        }
