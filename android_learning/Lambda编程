@@ -1,0 +1,63 @@
+1.面向对象编程
+1.1类
+  （同Java）
+1.2继承
+  Kotlin中一个类默认是不可以被继承的，如果想要让一个类可以被继承，需要主动声明open关键字：
+  open class Person {
+    …
+  }
+  要让另一个类去继承Person类，则需要使用冒号关键字：
+  class Student : Person() {
+     var sno = ""
+     var grade = 0
+  }
+  现在Student类中就自动拥有了Person类中的字段和函数，还可以定义自己独有的字段和函数。
+1.3接口
+  Kotlin中定义接口的关键字和Java中是相同的，都是使用的interface：
+  interface Study {
+    fun readBooks()
+    fun doHomework()
+  }
+  而Kotlin中实现接口的关键字变量了冒号，和继承使用的是同样的关键字：
+  class Student(val name: String, val age: Int) : Study {
+    override fun readBooks() {
+        println(name + " is reading.")
+    }
+    override fun doHomework() {
+        println(name + " is doing homework.")
+    }
+  }
+1.4数据类
+  Kotlin中使用data关键字可以定义一个数据类：
+  data class Cellphone(val brand: String, val price: Double)
+  Kotlin会根据数据类的主构造函数中的参数将equals()、hashCode()、toString()等固定且无实际逻辑意义的方法自动生成，从而大大简少了开发的工作量。
+1.5单例类
+  Kotlin中使用object关键字可以定义一个单例类：
+  object Singleton {
+    fun singletonTest() {
+        println("singletonTest is called.")
+    }
+  }
+  而调用单例类中的函数比较类似于Java中静态方法的调用方式：
+  Singleton.singletonTest()
+  这种写法虽然看上去像是静态方法的调用，但其实Kotlin在背后自动帮我们创建了一个Singleton类的实例，并且保证全局只会存在一个Singleton实例。
+2.Lambda编程
+2.1集合的创建
+  list创建（有序）：
+  val list = listOf("Apple", "Banana", "Orange", "Pear", "Grape")
+  set创建（无序）：
+  val set = setOf("Apple", "Banana", "Orange", "Pear", "Grape")
+  map创建（映射）：
+  val map = mapOf("Apple" to 1, "Banana" to 2, "Orange" to 3, "Pear" to 4, "Grape" to 5)
+  xxxof的创建方式所创建的是不可变的集合，若要创建可变集合使用mutabexxxof（）方式创建
+2.2表达式
+  Lambda就是一小段可以作为参数传递的代码。正常情况下，我们向某个函数传参时只能传入变量，而借助Lambda却允许传入一小段代码。
+
+  我们来看一下Lambda表达式的语法结构：
+
+  {参数名1: 参数类型, 参数名2: 参数类型 -> 函数体}
+
+  首先最外层是一对大括号，如果有参数传入到Lambda表达式中的话，我们还需要声明参数列表，参数列表的结尾使用一个->符号，表示参数列表的结束以及函数体的开始，
+  函数体中可以编写任意行代码，并且最后一行代码会自动作为Lambda表达式的返回值。
+2.3集合的函数式API
+  
