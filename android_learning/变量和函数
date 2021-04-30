@@ -10,8 +10,46 @@ kotlin学习
         return v
       }
   若没有返回值则返回值类型可为空
+  =========================================================================================================================
   if条件语句：https://blog.csdn.net/qq_35178391/article/details/106734637
+  
+  Kotlin中的if语句相比于Java有一个额外的功能：它是可以有返回值的，返回值就是if语句每一个条件中最后一行代码的返回值。
+  
+  例如：
+  fun largerNumber(num1: Int, num2: Int): Int {
+    return if (num1 > num2) {
+        num1
+    } else {
+        num2
+    }
+  }
+  当一个函数只有一行代码时，可以省略函数体部分，直接将这一行代码使用等号串连在函数定义的尾部。虽然largerNumber()函数不止只有一行代码，但是它和只有一行代码的作用是相同的，
+  只是return了一下if语句的返回值而已，符合该语法糖的使用条件。那么我们就可以将代码进一步精简：
+  fun largerNumber(num1: Int, num2: Int) = if (num1 > num2) {
+      num1
+  } else {
+      num2
+  }
+  最后可精简为一行代码：fun largerNumber(num1: Int, num2: Int) = if (num1 > num2) num1 else num2
+  ==============================================================================================================================
   when条件语句：https://blog.csdn.net/weixin_34186128/article/details/87999240?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522161962438916780262591322%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=161962438916780262591322&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-87999240.first_rank_v2_pc_rank_v29&utm_term=kotlinwhen&spm=1018.2226.3001.4187
+  当需要判断的条件非常多的时候，可以考虑使用when语句来替代if语句。
+  fun getScore(name: String) = when (name) {
+      "Tom" -> 86
+      "Jim" -> 77
+      "Jack" -> 95
+      "Lily" -> 100
+      else -> 0
+  }
+  除了精确匹配之外，when语句还允许进行类型匹配。
+  fun checkNumber(num: Number) {
+    when (num) {
+        is Int -> println("number is Int")
+        is Double -> println("number is Double")
+        else -> println("number not support")
+      }
+  }
+  ==============================================================================================================================
   循环语句：
     while循环和Java中一样
     for循环：
@@ -55,3 +93,5 @@ kotlin学习
         for (index in list_test.withIndex()) {
             Log.d(TAG, "${index.value}")
         }
+        
+        
