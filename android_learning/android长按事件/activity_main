@@ -127,8 +127,8 @@ public class MainActivity extends AppCompatActivity {
                                 add();
                                 break;
                         }
-                        // 每隔150毫秒做一次
-                        mHandler.sendEmptyMessageDelayed(LONG_CLICK, 15);
+                        // 每隔100毫秒做一次
+                        mHandler.sendEmptyMessageDelayed(LONG_CLICK, 100);
                     }
                     break;
             }
